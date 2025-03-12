@@ -10,6 +10,7 @@ A API oferece 5 rotas para obter dados de diferentes categorias do campeonato:
 - `/load/results`: Retorna os resultados das corridas.
 - `/load/teams`: Retorna informações sobre as equipes.
 - `/load/scores`: Retorna a pontuação atribuída às posições.
+
 Os dados são recuperados de planilhas do Google Sheets, sendo lidos e disponibilizados no formato JSON.
 
 ## Pré-requisitos
@@ -53,6 +54,7 @@ cd f1_championship_api
 pip install -r requirements.txt
 ```
 3 - Crie um arquivo .env no diretório do projeto com os IDs das planilhas (como descrito acima).
+
 4 - Execute o servidor Flask:
 ```
 python app.py
