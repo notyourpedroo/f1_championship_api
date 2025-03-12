@@ -17,6 +17,7 @@ Antes de executar o projeto, certifique-se de ter as seguintes dependências ins
 
 - Python 3.x
 - pip (gerenciador de pacotes do Python)
+
 Você também precisará dos seguintes pacotes Python:
 
 - Flask
