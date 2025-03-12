@@ -24,6 +24,7 @@ Você também precisará dos seguintes pacotes Python:
 - pandas
 - requests
 - python-dotenv
+
 Para instalar as dependências, execute o seguinte comando:
 
 ```
