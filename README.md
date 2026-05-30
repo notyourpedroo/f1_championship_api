@@ -10,11 +10,11 @@ A API oferece endpoints para recuperar dados de várias categorias do campeonato
 
 | Endpoint | Descrição | Exemplo de Resposta |
 | :--- | :--- | :--- |
-| `/load/races` | Informações das corridas (Data, Grande Prêmio, Circuito) | `[{"race_date": "2024-03-02", "grand_prix": "Bahrain GP", ...}]` |
-| `/load/drivers` | Perfis e informações dos pilotos | `[{"driver_name": "Max Verstappen", "nationality": "Dutch", ...}]` |
-| `/load/results` | Resultados das corridas e posições de chegada | `[{"race": "Bahrain GP", "driver": "Max Verstappen", "position": 1, ...}]` |
-| `/load/teams` | Detalhes das equipes e construtores | `[{"team_name": "Red Bull Racing", "base": "Milton Keynes", ...}]` |
-| `/load/scores` | Atribuição de pontos por posição | `[{"position": 1, "points": 25}, ...]` |
+| `/load/races` | Informações das corridas (Nome, Data, Local) | `[{"race_id": 1, "race_name": "GP da Austrália", "race_date": "2025-03-16", ...}]` |
+| `/load/drivers` | Perfis e informações dos pilotos | `[{"driver_id": 1, "team_id": 1, "driver_name": "José", ...}]` |
+| `/load/results` | Resultados das corridas e posições | `[{"race_id": 1, "driver_id": 1, "driver_final_position": 6, ...}]` |
+| `/load/teams` | Detalhes das equipes e construtores | `[{"team_id": 1, "team_name": "Oracle Red Bull Racing", ...}]` |
+| `/load/scores` | Atribuição de pontos por posição | `[{"score_id": 1, "position": 1, "points": 25, ...}]` |
 
 ## 🛠️ Instalação e Configuração
 
