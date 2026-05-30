@@ -1,71 +1,73 @@
-
 # F1 Championship API
-Este projeto cria uma API usando Flask para fornecer dados sobre um campeonato de Fórmula 1. Os dados são armazenados em arquivos do Google Sheets e são lidos dinamicamente através de chamadas de rota.
 
-## Funcionalidades
-A API oferece 5 rotas para obter dados de diferentes categorias do campeonato:
+Uma API REST leve construída com Flask que fornece acesso dinâmico a dados do campeonato de Fórmula 1 armazenados no Google Sheets. Este projeto demonstra como integrar dados de planilhas externas como fonte de dados para um serviço web.
 
-- `/load/races`: Retorna informações sobre as corridas.
-- `/load/drivers`: Retorna informações sobre os pilotos.
-- `/load/results`: Retorna os resultados das corridas.
-- `/load/teams`: Retorna informações sobre as equipes.
-- `/load/scores`: Retorna a pontuação atribuída às posições.
+## 🚀 Funcionalidades
 
-Os dados são recuperados de planilhas do Google Sheets, sendo lidos e disponibilizados no formato JSON.
+A API oferece endpoints para recuperar dados de várias categorias do campeonato. Todos os dados são buscados em tempo real no Google Sheets e retornados no formato JSON.
 
-## Pré-requisitos
-Antes de executar o projeto, certifique-se de ter as seguintes dependências instaladas:
+### Endpoints
 
-- Python 3.x
-- pip (gerenciador de pacotes do Python)
+| Endpoint | Descrição | Exemplo de Resposta |
+| :--- | :--- | :--- |
+| `/load/races` | Informações das corridas (Data, Grande Prêmio, Circuito) | `[{"race_date": "2024-03-02", "grand_prix": "Bahrain GP", ...}]` |
+| `/load/drivers` | Perfis e informações dos pilotos | `[{"driver_name": "Max Verstappen", "nationality": "Dutch", ...}]` |
+| `/load/results` | Resultados das corridas e posições de chegada | `[{"race": "Bahrain GP", "driver": "Max Verstappen", "position": 1, ...}]` |
+| `/load/teams` | Detalhes das equipes e construtores | `[{"team_name": "Red Bull Racing", "base": "Milton Keynes", ...}]` |
+| `/load/scores` | Atribuição de pontos por posição | `[{"position": 1, "points": 25}, ...]` |
 
-Você também precisará dos seguintes pacotes Python:
+## 🛠️ Instalação e Configuração
 
-- Flask
-- pandas
-- requests
-- python-dotenv
+### Pré-requisitos
 
-Para instalar as dependências, execute o seguinte comando:
+- **Python 3.x**
+- **pip** (gerenciador de pacotes do Python)
 
-```
-bash
-pip install -r requirements.txt
-```
-## Arquivo `.env`
-O projeto utiliza o arquivo `.env` para armazenar os IDs dos arquivos no Google Sheets. O arquivo `.env` deve estar presente no diretório do projeto com o seguinte conteúdo:
-```
-RACES_ID=seu_id_de_arquivo_races
-DRIVERS_ID=seu_id_de_arquivo_drivers
-RESULTS_ID=seu_id_de_arquivo_results
-TEAMS_ID=seu_id_de_arquivo_teams
-SCORES_ID=seu_id_de_arquivo_scores
-```
-Substitua os valores acima pelos IDs dos arquivos de cada planilha do Google Sheets.
+### Passos de Configuração
 
-## Como rodar o projeto
-1 - Clone o repositório para sua máquina local:
-```
-git clone https://seu_repositorio.git
-cd f1_championship_api
-```
-2 - Instale as dependências:
-```
-pip install -r requirements.txt
-```
-3 - Crie um arquivo .env no diretório do projeto com os IDs das planilhas (como descrito acima).
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/notyourpedroo/f1_championship_api.git
+   cd f1_championship_api
+   ```
 
-4 - Execute o servidor Flask:
-```
+2. **Instale as dependências:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Configure as Variáveis de Ambiente:**
+   Crie um arquivo `.env` no diretório raiz para armazenar os IDs do Google Sheets:
+   ```env
+   RACES_ID=seu_id_de_arquivo_races
+   DRIVERS_ID=seu_id_de_arquivo_drivers
+   RESULTS_ID=seu_id_de_arquivo_results
+   TEAMS_ID=seu_id_de_arquivo_teams
+   SCORES_ID=seu_id_de_arquivo_scores
+   ```
+   *Nota: Você pode encontrar o ID do arquivo na URL da sua planilha do Google: `docs.google.com/spreadsheets/d/[ID_DO_ARQUIVO]/edit`.*
+
+## 🏃 Executando o Projeto
+
+Inicie o servidor Flask:
+```bash
 python app.py
 ```
-5 - O servidor estará disponível em `http://127.0.0.1:5000/`.
+O servidor estará disponível em `http://127.0.0.1:5000/`.
 
-## Exemplo de uso
-Com o servidor em execução, você pode acessar as rotas para obter os dados em formato JSON:
+### Exemplo de Uso
+Para obter os dados dos pilotos, basta acessar:
+`GET http://127.0.0.1:5000/load/drivers`
 
-- Corridas: `GET http://127.0.0.1:5000/load/races`
-- Pilotos: `GET http://127.0.0.1:5000/load/drivers`
-- Resultados: `GET http://127.0.0.1:5000/load/results`
-- Equipes: `GET http://127.0.0.1:5000/load/teams`
-- Pontuação: `GET http://127.0.0.1:5000/load/scores`
+## 🤝 Contribuição
+
+Contribuições são bem-vindas! Siga estes passos:
+1. Faça um Fork do projeto.
+2. Crie sua branch de funcionalidade (`git checkout -b feature/NovaFuncionalidade`).
+3. Faça o commit de suas alterações (`git commit -m 'Adiciona NovaFuncionalidade'`).
+4. Faça o push para a branch (`git push origin feature/NovaFuncionalidade`).
+5. Abra um Pull Request.
+
+## 📄 Licença
+
+Este projeto está licenciado sob a Licença MIT.
