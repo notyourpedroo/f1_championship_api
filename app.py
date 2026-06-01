@@ -1,7 +1,5 @@
 from flask import Flask, jsonify
-import requests
 import pandas as pd
-from io import BytesIO
 from dotenv import load_dotenv
 import os
 
@@ -17,20 +15,17 @@ file_ids = {
     "scores": os.getenv("SCORES_ID")
 }
 
-def get_xlsx_from_drive(file_id):
-    url = f"https://docs.google.com/spreadsheets/d/{file_id}/export?format=xlsx"
-    print(f"Downloading from: {url}")
+def get_csv_from_local(file_type):
+    file_path = os.path.join("files", "2025", f"{file_type}.csv")
+    print(f"Reading from: {file_path}")
 
-    response = requests.get(url)
-
-    if response.status_code != 200:
-        return None, f"Erro ao baixar o arquivo: {response.status_code}"
+    if not os.path.exists(file_path):
+        return None, f"Arquivo não encontrado: {file_path}"
 
     try:
-        xlsx_data = BytesIO(response.content)
-        df = pd.read_excel(xlsx_data, engine="openpyxl")
+        df = pd.read_csv(file_path)
     except Exception as e:
-        return None, f"Erro ao ler o arquivo XLSX: {str(e)}"
+        return None, f"Erro ao ler o arquivo CSV: {str(e)}"
 
     return df, None
 
@@ -40,8 +35,7 @@ def load_data(file_type):
     if file_type not in file_ids:
         return jsonify({"error": f"Arquivo '{file_type}' não encontrado."}), 400
     
-    file_id = file_ids[file_type]
-    df, error = get_xlsx_from_drive(file_id)
+    df, error = get_csv_from_local(file_type)
     
     if error:
         return jsonify({"error": error}), 500
