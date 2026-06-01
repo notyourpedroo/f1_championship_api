@@ -1,10 +1,10 @@
 # F1 Championship API
 
-Uma API REST leve construída com Flask que fornece acesso dinâmico a dados do campeonato de Fórmula 1 armazenados no Google Sheets. Este projeto demonstra como integrar dados de planilhas externas como fonte de dados para um serviço web.
+Uma API REST leve construída com Flask que fornece acesso dinâmico a dados do campeonato de Fórmula 1 armazenados em arquivos CSV locais. Este projeto demonstra como servir dados a partir de arquivos estruturados para um serviço web.
 
 ## 🚀 Funcionalidades
 
-A API oferece endpoints para recuperar dados de várias categorias do campeonato. Todos os dados são buscados em tempo real no Google Sheets e retornados no formato JSON.
+A API oferece endpoints para recuperar dados de várias categorias do campeonato. Todos os dados são lidos de arquivos CSV locais e retornados no formato JSON.
 
 ### Endpoints
 
@@ -37,15 +37,15 @@ A API oferece endpoints para recuperar dados de várias categorias do campeonato
    ```
 
 3. **Configure as Variáveis de Ambiente:**
-   Crie um arquivo `.env` no diretório raiz para armazenar os IDs do Google Sheets:
+   Crie um arquivo `.env` no diretório raiz para definir os arquivos permitidos:
    ```env
-   RACES_ID=seu_id_de_arquivo_races
-   DRIVERS_ID=seu_id_de_arquivo_drivers
-   RESULTS_ID=seu_id_de_arquivo_results
-   TEAMS_ID=seu_id_de_arquivo_teams
-   SCORES_ID=seu_id_de_arquivo_scores
+   RACES_ID=races
+   DRIVERS_ID=drivers
+   RESULTS_ID=results
+   TEAMS_ID=teams
+   SCORES_ID=scores
    ```
-   *Nota: Você pode encontrar o ID do arquivo na URL da sua planilha do Google: `docs.google.com/spreadsheets/d/[ID_DO_ARQUIVO]/edit`.*
+   *Nota: Atualmente, a API utiliza esses valores para validar os tipos de arquivos solicitados.*
 
 ## 🏃 Executando o Projeto
 
