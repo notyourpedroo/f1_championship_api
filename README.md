@@ -55,9 +55,22 @@ python app.py
 ```
 O servidor estará disponível em `http://127.0.0.1:5000/`.
 
+### 🚀 Ambiente de Produção
+Para executar a aplicação em ambiente de produção, recomenda-se o uso do Gunicorn para melhor performance e estabilidade:
+```bash
+gunicorn -w 4 -b 0.0.0.0:5000 app:app
+```
+O projeto também inclui um `Procfile` configurado para deploys em plataformas como Heroku.
+
 ### Exemplo de Uso
 Para obter os dados dos pilotos, basta acessar:
 `GET http://127.0.0.1:5000/load/drivers`
+
+## 🤖 Guia para Agentes
+
+Este projeto possui uma pasta `.project_aux` na raiz, que serve como base de conhecimento e guia de conduta para todos os agentes de IA que atuam no desenvolvimento. 
+
+**Sempre consulte `.project_aux/RULES.md` ao iniciar sua sessão para garantir a conformidade com os padrões de desenvolvimento, workflow e comunicação do projeto.**
 
 ## 🤝 Contribuição
 
