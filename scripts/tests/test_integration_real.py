@@ -8,30 +8,31 @@ def client():
         yield client
 
 def test_real_load_races(client):
-    # This should fail because app.py looks for .xlsx but only .csv exists
-    response = client.get('/load/races')
-    print(f"\nResponse status: {response.status_code}")
-    print(f"Response body: {response.get_json()}")
-    assert response.status_code == 500
-    assert 'Arquivo não encontrado' in response.get_json()['error']
-    assert '.xlsx' in response.get_json()['error']
+    response = client.get('/load/2025/races')
+    assert response.status_code == 200
+    assert len(response.get_json()) > 0
 
 def test_real_load_drivers(client):
-    response = client.get('/load/drivers')
-    assert response.status_code == 500
-    assert 'Arquivo não encontrado' in response.get_json()['error']
+    response = client.get('/load/2025/drivers')
+    assert response.status_code == 200
+    assert len(response.get_json()) > 0
 
 def test_real_load_results(client):
-    response = client.get('/load/results')
-    assert response.status_code == 500
-    assert 'Arquivo não encontrado' in response.get_json()['error']
+    response = client.get('/load/2025/results')
+    assert response.status_code == 200
+    assert len(response.get_json()) > 0
 
 def test_real_load_teams(client):
-    response = client.get('/load/teams')
-    assert response.status_code == 500
-    assert 'Arquivo não encontrado' in response.get_json()['error']
+    response = client.get('/load/2025/teams')
+    assert response.status_code == 200
+    assert len(response.get_json()) > 0
 
 def test_real_load_scores(client):
-    response = client.get('/load/scores')
+    response = client.get('/load/2025/scores')
+    assert response.status_code == 200
+    assert len(response.get_json()) > 0
+
+def test_real_load_invalid_year(client):
+    response = client.get('/load/2024/races')
     assert response.status_code == 500
     assert 'Arquivo não encontrado' in response.get_json()['error']

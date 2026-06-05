@@ -8,13 +8,11 @@ A API oferece endpoints para recuperar dados de várias categorias do campeonato
 
 ### Endpoints
 
-| Endpoint | Descrição | Exemplo de Resposta |
+| Endpoint | Descrição | Exemplo de Requisição |
 | :--- | :--- | :--- |
-| `/load/races` | Informações das corridas (Nome, Data, Local) | `[{"race_id": 1, "race_name": "GP da Austrália", "race_date": "2025-03-16", ...}]` |
-| `/load/drivers` | Perfis e informações dos pilotos | `[{"driver_id": 1, "team_id": 1, "driver_name": "José", ...}]` |
-| `/load/results` | Resultados das corridas e posições | `[{"race_id": 1, "driver_id": 1, "driver_final_position": 6, ...}]` |
-| `/load/teams` | Detalhes das equipes e construtores | `[{"team_id": 1, "team_name": "Oracle Red Bull Racing", ...}]` |
-| `/load/scores` | Atribuição de pontos por posição | `[{"score_id": 1, "position": 1, "points": 25, ...}]` |
+| `/load/<year>/<file_type>` | Informações de categorias do campeonato para um ano específico | `GET /load/2025/races` |
+
+Para mais detalhes sobre as rotas e os tipos de arquivos suportados, consulte o [Mapeamento de Rotas](docs/routes_mapping.md).
 
 ## 🛠️ Instalação e Configuração
 
@@ -63,8 +61,8 @@ gunicorn -w 4 -b 0.0.0.0:5000 app:app
 O projeto também inclui um `Procfile` configurado para deploys em plataformas como Heroku.
 
 ### Exemplo de Uso
-Para obter os dados dos pilotos, basta acessar:
-`GET http://127.0.0.1:5000/load/drivers`
+Para obter os dados dos pilotos do ano de 2025, basta acessar:
+`GET http://127.0.0.1:5000/load/2025/drivers`
 
 ## 🤖 Guia para Agentes
 
