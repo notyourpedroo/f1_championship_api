@@ -1,78 +1,66 @@
-# F1 Championship API
+# F1 Championship API (Modernized)
 
-Uma API REST leve construída com Flask que fornece acesso dinâmico a dados do campeonato de Fórmula 1 armazenados em arquivos CSV locais. Este projeto demonstra como servir dados a partir de arquivos estruturados para um serviço web.
+Uma API REST de alta performance construída com **FastAPI** que fornece acesso a dados do campeonato de Fórmula 1. O projeto utiliza uma arquitetura de processamento de dados moderna, migrando de arquivos CSV locais para um banco de dados **SQLite**, garantindo integridade referencial e continuidade histórica.
 
-## 🚀 Funcionalidades
+## 🚀 Stack Tecnológica
 
-A API oferece endpoints para recuperar dados de várias categorias do campeonato. Todos os dados são lidos de arquivos CSV locais e retornados no formato JSON.
+*   **API Framework:** [FastAPI](https://fastapi.tiangolo.com/) (Assíncrono e alta performance).
+*   **Processamento de Dados:** [Pandas](https://pandas.pydata.org/).
+*   **Banco de Dados:** [SQLite](https://www.sqlite.org/) (Camada Gold).
+*   **Servidor ASGI:** [Uvicorn](https://www.uvicorn.org/).
+*   **Ambiente:** Python 3.10+ com venv.
 
-### Endpoints
+## 🛠️ Arquitetura de Dados
 
-| Endpoint | Descrição | Exemplo de Requisição |
-| :--- | :--- | :--- |
-| `/load/<year>/<file_type>` | Informações de categorias do campeonato para um ano específico | `GET /load/2025/races` |
+O projeto implementa um pipeline de ingestão que transforma dados brutos (`raw`) em um modelo dimensional no SQLite:
 
-Para mais detalhes sobre as rotas e os tipos de arquivos suportados, consulte o [Mapeamento de Rotas](docs/routes_mapping.md).
+1.  **Normalização de Nomes:** Utiliza `files/raw/name_changes/driver_names.csv` para unificar nomes de pilotos entre diferentes anos.
+2.  **Entidades Globais:** Pilotos e Equipes são tratados como entidades únicas. Se um piloto corre em 2025 e 2026, ele mantém o mesmo `driver_id`.
+3.  **Ordenação Cronológica:** As corridas são processadas e indexadas rigorosamente por data, garantindo que as **Sprints** sempre precedam as **Corridas Principais** no mesmo dia.
+4.  **Enriquecimento de Pontos:** A pontuação é calculada dinamicamente cruzando a posição final do piloto com a tabela de regras de pontuação (`scores`).
 
-## 🛠️ Instalação e Configuração
+## 🏃 Execução do Projeto
 
-### Pré-requisitos
+### 1. Configuração do Ambiente
+```bash
+# Ativar ambiente virtual
+source .venv/bin/activate
 
-- **Python 3.x**
-- **pip** (gerenciador de pacotes do Python)
+# Instalar dependências
+pip install -r requirements.txt
+```
 
-### Passos de Configuração
+### 2. Pipeline de Ingestão
+Para processar os dados brutos e gerar o banco de dados `f1_championship.db`:
+```bash
+python scripts/ingest_full.py
+```
 
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/notyourpedroo/f1_championship_api.git
-   cd f1_championship_api
-   ```
-
-2. **Instale as dependências:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Configure as Variáveis de Ambiente:**
-   Crie um arquivo `.env` no diretório raiz para definir os arquivos permitidos:
-   ```env
-   RACES_ID=races
-   DRIVERS_ID=drivers
-   RESULTS_ID=results
-   TEAMS_ID=teams
-   SCORES_ID=scores
-   ```
-   *Nota: Atualmente, a API utiliza esses valores para validar os tipos de arquivos solicitados.*
-
-## 🏃 Executando o Projeto
-
-Inicie o servidor Flask:
+### 3. Iniciando a API
 ```bash
 python app.py
 ```
 O servidor estará disponível em `http://127.0.0.1:5000/`.
 
-### 🚀 Ambiente de Produção
-Para executar a aplicação em ambiente de produção, recomenda-se o uso do Gunicorn para melhor performance e estabilidade:
-```bash
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
-```
-O projeto também inclui um `Procfile` configurado para deploys em plataformas como Heroku.
+## 📡 API Endpoints
 
-### Exemplo de Uso
-Para obter os dados dos pilotos do ano de 2025, basta acessar:
-`GET http://127.0.0.1:5000/load/2025/drivers`
+A API expõe um endpoint dinâmico para recuperação de dados:
 
-## 🤝 Contribuição
+**`GET /load/{year}/{file_type}`**
 
-Contribuições são bem-vindas! Siga estes passos:
-1. Faça um Fork do projeto.
-2. Crie sua branch de funcionalidade (`git checkout -b feature/NovaFuncionalidade`).
-3. Faça o commit de suas alterações (`git commit -m 'Adiciona NovaFuncionalidade'`).
-4. Faça o push para a branch (`git push origin feature/NovaFuncionalidade`).
-5. Abra um Pull Request.
+| Parâmetro | Descrição | Exemplo |
+| :--- | :--- | :--- |
+| `{year}` | Ano dos dados (ex: 2025, 2026) | `2026` |
+| `{file_type}` | Categoria de dados suportada | `drivers`, `teams`, `races`, `results`, `scores` |
 
-## 📄 Licença
+**Exemplo de Requisição:**
+`GET http://127.0.0.1:5000/load/2026/drivers`
 
-Este projeto está licenciado sob a Licença MIT.
+---
+
+### 📂 Estrutura de Pastas Essencial
+*   `files/raw/`: Dados brutos (CSV).
+*   `scripts/`: Scripts de ingestão e processamento.
+*   `app.py`: Código fonte da API FastAPI.
+*   `f1_championship.db`: Banco de dados SQLite (Gerado após ingestão).
+

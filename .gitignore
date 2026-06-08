@@ -173,3 +173,4 @@ cython_debug/
 # Project auxiliary files
 .project_aux/
 
+f1_championship.db
