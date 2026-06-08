@@ -64,12 +64,6 @@ O projeto também inclui um `Procfile` configurado para deploys em plataformas c
 Para obter os dados dos pilotos do ano de 2025, basta acessar:
 `GET http://127.0.0.1:5000/load/2025/drivers`
 
-## 🤖 Guia para Agentes
-
-Este projeto possui uma pasta `.project_aux` na raiz, que serve como base de conhecimento e guia de conduta para todos os agentes de IA que atuam no desenvolvimento. 
-
-**Sempre consulte `.project_aux/RULES.md` ao iniciar sua sessão para garantir a conformidade com os padrões de desenvolvimento, workflow e comunicação do projeto.**
-
 ## 🤝 Contribuição
 
 Contribuições são bem-vindas! Siga estes passos:
