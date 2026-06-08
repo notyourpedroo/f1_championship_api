@@ -15,8 +15,8 @@ file_ids = {
     "scores": os.getenv("SCORES_ID")
 }
 
-def get_csv_from_local(file_type):
-    file_path = os.path.join("files", "2025", f"{file_type}.csv")
+def get_csv_from_local(year, file_type):
+    file_path = os.path.join("files", "raw", year, f"{file_type}.csv")
     print(f"Reading from: {file_path}")
 
     if not os.path.exists(file_path):
@@ -30,12 +30,12 @@ def get_csv_from_local(file_type):
     return df, None
 
 
-@app.route('/load/<file_type>', methods=['GET'])
-def load_data(file_type):
+@app.route('/load/<year>/<file_type>', methods=['GET'])
+def load_data(year, file_type):
     if file_type not in file_ids:
         return jsonify({"error": f"Arquivo '{file_type}' não encontrado."}), 400
     
-    df, error = get_csv_from_local(file_type)
+    df, error = get_csv_from_local(year, file_type)
     
     if error:
         return jsonify({"error": error}), 500
