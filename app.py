@@ -61,6 +61,8 @@ async def load_data(year: int, file_type: str):
 
     except sqlite3.Error as e:
         raise HTTPException(status_code=500, detail=f"Erro no banco de dados: {str(e)}")
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
 
