@@ -93,8 +93,8 @@ async def load_data(year: int, file_type: str, db: Session = Depends(get_db)):
 
     try:
         if file_type == 'scores':
-            query = text('SELECT * FROM scores')
-            df = pd.DataFrame(db.execute(query).fetchall(), columns=db.execute(query).keys())
+            query = text('SELECT * FROM scores WHERE year = :year ORDER BY CASE WHEN is_sprint = \'FALSE\' THEN 0 ELSE 1 END, position')
+            df = pd.DataFrame(db.execute(query, {"year": year}).fetchall(), columns=list(db.execute(query, {"year": year}).keys()))
         elif file_type == 'teams':
             query = text('''
                 SELECT DISTINCT t.team_id, t.team_name, r.year 
